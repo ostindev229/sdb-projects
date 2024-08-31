@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { ArticleDataProps, NewProductionDataProps, ProductionArticleDataProps } from "../pages/Authentication/type";
 import { PartialUpdateArticle } from "../components/Tables/ProductionTable";
 const API = axios.create({
-  baseURL: "http://192.168.100.5:8001/",
+  baseURL: "http://192.168.100.5:8000/",
 });
 
 export const addArticle = (articleData: ArticleDataProps): Promise<AxiosResponse<any>> => {

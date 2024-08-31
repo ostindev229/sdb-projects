@@ -5,7 +5,7 @@ import Loader from './common/Loader';
 import Production from './pages/Authentication/Production';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
-
+import Login from './pages/Authentication/Login';
 
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
@@ -28,62 +28,67 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
-    <DefaultLayout>
-      <Routes>
-        <Route
-          index
-          element={
-            <>
-              <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <ECommerce />
-            </>
-          }
-        />
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <DefaultLayout>
+            <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <ECommerce />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <DefaultLayout>
+            <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <Profile />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path="/forms/form-elements/:id"
+        element={
+          <DefaultLayout>
+            <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <FormElements />
+          </DefaultLayout>
+        }
+      />
+      <Route
+        path="/auth/signin"
+        element={
+          <>
+            <DefaultLayout>
 
-        <Route
-          path="/profile"
-          element={
-            <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Profile />
-            </>
-          }
-        />
-        <Route
-          path="/forms/form-elements/:id"
-          element={
-            <>
-              <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormElements />
-            </>
-          }
-        />
-
-
-
-
-        <Route
-          path="/auth/signin"
-          element={
-            <>
               <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <SignIn />
-            </>
-          }
-        />
-
-
-        <Route
-          path="/auth/new-production"
-          element={
-            <>
+            </DefaultLayout>
+          </>
+        }
+      />
+      <Route
+        path="/auth/new-production"
+        element={
+          <>
+            <DefaultLayout>
               <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <Production />
-            </>
-          }
-        />
-      </Routes>
-    </DefaultLayout>
+            </DefaultLayout>
+          </>
+        }
+      />
+      <Route
+        path="/auth/login"
+        element={
+          <>
+            <PageTitle title="Login | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <Login />
+          </>
+        }
+      />
+    </Routes>
   );
 }
 

@@ -8,7 +8,7 @@ import { NewProductionDataProps } from './type';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import Loader from '../../common/Loader';
-
+import { useCustomToast } from '../../utils/toast';
 
 const validationSchema = Yup.object().shape({
     productionDate: Yup.date().required("Date is required"),
@@ -19,8 +19,10 @@ const validationSchema = Yup.object().shape({
 const Production: React.FC = () => {
     const [productionData, setProductionData] = useState<NewProductionDataProps[]>([]);
     const [loading, setLoading] = useState<boolean>(false); // État de chargement
+    const [submitLoading, setSubmitLoading] = useState<boolean>(false); // État de chargement du bouton
     const [error, setError] = useState<string | null>(null); // État d'erreur
     const navigate = useNavigate();
+    const { showToast } = useCustomToast();
 
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -62,14 +64,27 @@ const Production: React.FC = () => {
         },
         validationSchema,
         onSubmit: async (values, { resetForm }) => {
+            setSubmitLoading(true); // Début du chargement du bouton
             try {
                 await addNewProductionAction({ ...values, onClick: () => { } });
-                alert('Données envoyées avec succès');
+
                 resetForm();
                 closeModal();
+                showToast({
+                    title: 'Success',
+                    description: 'Une nouvelle production a été ajoutée avec succès.',
+                    status: 'success',
+                });
+                fetchProductionWithExponentialBackoff(); // Actualiser la liste des productions
             } catch (error) {
                 console.error('Error:', error);
-                alert("Erreur lors de l'envoi des données");
+                showToast({
+                    title: 'Error',
+                    description: 'La création de la production a échoué.',
+                    status: 'error',
+                });
+            } finally {
+                setSubmitLoading(false); // Fin du chargement du bouton
             }
         },
     });
@@ -92,7 +107,7 @@ const Production: React.FC = () => {
         <>
             <div>
                 <motion.button
-                    className="bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                    className="bg-[#7B3F00] text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={openModal}
@@ -187,11 +202,16 @@ const Production: React.FC = () => {
                                         <div className="flex justify-between">
                                             <motion.button
                                                 type="submit"
-                                                className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg mr-2 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                                                className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg mr-2 shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-center"
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
+                                                disabled={submitLoading} // Désactiver le bouton pendant le chargement
                                             >
-                                                Soumettre
+                                                {submitLoading ? (
+                                                    <span className="loader"></span> // Loader blanc
+                                                ) : (
+                                                    'Soumettre'
+                                                )}
                                             </motion.button>
                                             <motion.button
                                                 type="button"
@@ -209,9 +229,11 @@ const Production: React.FC = () => {
                         </motion.div>
                     )}
                 </AnimatePresence>
+
+
             </div>
         </>
     );
-};
+}
 
 export default Production;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import TableThree from '../../components/Tables/TableThree';
 import { ArticleDataProps } from './type';
+import { useCustomToast } from '../../utils/toast';
 
 import {
   addArticleAction,
@@ -20,6 +21,7 @@ const validationSchema = Yup.object().shape({
 
 const SignIn: React.FC = () => {
   const [articles, setArticles] = useState<ArticleDataProps[]>([]);
+  const { showToast } = useCustomToast();
 
   const fetchArticlesWithExponentialBackoff = async (retries = 3, delay = 1000) => {
     try {
@@ -57,12 +59,20 @@ const SignIn: React.FC = () => {
     onSubmit: async (values, { resetForm }: FormikHelpers<{ id: number, articleName: string, articleQte: number }>) => {
       try {
         await addArticleAction(values);
-        alert('Données envoyées avec succès');
+        showToast({
+          title: 'Success',
+          description: 'Votre article a été ajouté avec succès.',
+          status: 'success',
+        });
         resetForm();
         fetchArticlesWithExponentialBackoff();
       } catch (error) {
         console.error('Error:', error);
-        alert("Erreur lors de l'envoi des données");
+        showToast({
+          title: 'Error',
+          description: 'Une erreur est survenue lors de l\'envoi des données.',
+          status: 'error',
+        });
       }
     },
   });
@@ -70,8 +80,18 @@ const SignIn: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await deleteArticleListAction(id);
+      showToast({
+        title: 'Success',
+        description: 'L\'article a été supprimé avec succès.',
+        status: 'success',
+      });
       fetchArticlesWithExponentialBackoff();
     } catch (error) {
+      showToast({
+        title: 'Error',
+        description: 'Une erreur est survenue lors de la suppression de l\'article.',
+        status: 'error',
+      });
       console.error('Error deleting article:', error);
     }
   };
@@ -79,8 +99,18 @@ const SignIn: React.FC = () => {
   const handleUpdate = async (id: number, articleData: ArticleDataProps) => {
     try {
       await updateArticleListAction(id, articleData);
+      showToast({
+        title: 'Success',
+        description: 'L\'article a été mis à jour avec succès.',
+        status: 'success',
+      });
       fetchArticlesWithExponentialBackoff();
     } catch (error) {
+      showToast({
+        title: 'Error',
+        description: 'Une erreur est survenue lors de la mise à jour de l\'article.',
+        status: 'error',
+      });
       console.error('Error updating article:', error);
     }
   };
@@ -102,7 +132,8 @@ const SignIn: React.FC = () => {
                 onBlur={formik.handleBlur}
                 value={formik.values.articleName}
                 placeholder="Entrez le nom de l'article"
-                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-[#7B3F00]"
+
               />
               {formik.touched.articleName && formik.errors.articleName ? (
                 <div className="text-red-500">{formik.errors.articleName}</div>
@@ -119,7 +150,7 @@ const SignIn: React.FC = () => {
                 onBlur={formik.handleBlur}
                 value={formik.values.articleQte}
                 placeholder="Entrez la quantité"
-                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-[#7B3F00]"
               />
               {formik.touched.articleQte && formik.errors.articleQte ? (
                 <div className="text-red-500">{formik.errors.articleQte}</div>
@@ -127,7 +158,7 @@ const SignIn: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+              className="flex w-full justify-center rounded bg-[#7B3F00] p-3 font-medium text-gray hover:bg-opacity-90"
             >
               Ajouter Article
             </button>

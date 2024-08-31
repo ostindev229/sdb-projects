@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import { useFormik, FormikHelpers } from "formik";
 import { AxiosError } from 'axios';
 import { UpdateArticleValues } from '../../components/Tables/ProductionTable';
+import { useToast } from '@chakra-ui/react';
 
 
 
@@ -38,6 +39,7 @@ const FormElements: React.FC = () => {
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [articlesState, setArticlesState] = useState<UpdateArticleValues[]>([]);
+  const toast = useToast();
 
   const fetchArticlesProduction = async () => {
     try {
@@ -75,12 +77,26 @@ const FormElements: React.FC = () => {
     onSubmit: async (values, { resetForm }: FormikHelpers<ProductionArticleDataProps>) => {
       try {
         await addArticleProductionAction(values);
-        alert('Données envoyées avec succès');
+        toast({
+          title: 'Success',
+          description: "Un article ajouté avec succès",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+        })
         resetForm();
         fetchArticlesProduction();
       } catch (error) {
         console.error('Erreur:', error);
-        alert("Erreur lors de l'envoi des données");
+        toast({
+          title: 'Error',
+          description: "L'ajout de l'article a échoué",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+        })
       }
     },
   });
@@ -89,13 +105,34 @@ const FormElements: React.FC = () => {
     try {
       await deleteArticleProductionListAction(id);
       setArticlesState(prevState => prevState.filter(article => article.id !== id));
-      alert('Article supprimé avec succès');
+      toast({
+        title: 'Success',
+        description: "Article supprimé avec succès",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      })
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'article:', error);
       if (error instanceof AxiosError && error.response?.status === 404) {
-        alert('Article introuvable');
+        toast({
+          title: 'Error',
+          description: "L'article n'a pas été trouvé",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+        })
       } else {
-        alert('Erreur lors de la suppression de l\'article');
+        toast({
+          title: 'Error',
+          description: "Erreur lors de la suppression de l'article",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+          position: 'top-right',
+        })
       }
     }
   };
@@ -113,11 +150,25 @@ const FormElements: React.FC = () => {
 
       await updateArticleProductionListAction(finalValue);
 
-      alert('Article mis à jour avec succès');
+      toast({
+        title: 'Success',
+        description: "L'article a été mis à jour avec succès",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      })
       fetchArticlesProduction(); // Re-fetch articles to update the state
     } catch (error) {
       console.error('Erreur lors de la mise à jour de l\'article:', error);
-      alert('Erreur lors de la mise à jour de l\'article');
+      toast({
+        title: 'Error',
+        description: "Erreur lors de la mise à jour de l'article",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      })
     }
   };
 
@@ -138,7 +189,7 @@ const FormElements: React.FC = () => {
                   value={formik.values.article_id}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${formik.touched.article_id && formik.errors.article_id ? 'border-red-500' : ''}`}
+                  className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] dark:border-form-strokedark dark:bg-form-input ${formik.touched.article_id && formik.errors.article_id ? 'border-red-500' : ''}`}
                 >
                   <option value="" disabled>Select Article</option>
                   {articles.map((article) => (
@@ -158,7 +209,7 @@ const FormElements: React.FC = () => {
                   value={formik.values.articleQte}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${formik.touched.articleQte && formik.errors.articleQte ? 'border-red-500' : ''}`}
+                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] dark:border-form-strokedark dark:bg-form-input ${formik.touched.articleQte && formik.errors.articleQte ? 'border-red-500' : ''}`}
                   min="1"
                 />
                 {formik.touched.articleQte && formik.errors.articleQte && (
@@ -174,7 +225,7 @@ const FormElements: React.FC = () => {
                   value={formik.values.unitPrice}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${formik.touched.unitPrice && formik.errors.unitPrice ? 'border-red-500' : ''}`}
+                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] dark:border-form-strokedark dark:bg-form-input ${formik.touched.articleQte && formik.errors.articleQte ? 'border-red-500' : ''}`}
                   min="1"
                   step="0.01"
                 />
@@ -185,7 +236,7 @@ const FormElements: React.FC = () => {
 
               <button
                 type="submit"
-                className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+                className="flex w-full justify-center rounded bg-[#7B3F00] p-3 font-medium text-gray hover:bg-opacity-90"
               >
                 Ajouter Article
               </button>
@@ -198,6 +249,9 @@ const FormElements: React.FC = () => {
             deleteProductionArticleData={handleDelete}
             updateProductionArticleData={handleUpdate}
           />
+        </div>
+        <div>
+          <p>Main d'ouvres directes</p>
         </div>
       </div>
     </>

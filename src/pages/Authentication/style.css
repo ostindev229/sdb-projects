@@ -1,0 +1,12 @@
+.logo_shadow {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), -23px 0 20px -23px rgba(0, 0, 0, 0.8), 23px 0 20px -23px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.1);
+    padding: 0px 10px;
+  }
+  .sdb_logo {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  .sdb_logo > span {
+    color: #7B3F00;
+  }
+  

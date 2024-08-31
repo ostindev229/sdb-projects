@@ -64,7 +64,7 @@ const TableThree: React.FC<TableThreeProps> = ({
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
-            <tr className="bg-slate-700 text-left dark:bg-meta-4">
+            <tr className="bg-[#1F1F1F] text-left">
               <th className="min-w-[220px] py-4 px-4 font-medium text-white dark:text-white xl:pl-11">
                 Nom des articles
               </th>
