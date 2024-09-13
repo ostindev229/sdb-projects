@@ -1,8 +1,9 @@
 
+
 import { ArticleDataProps, NewProductionDataProps } from '../pages/Authentication/type.ts';
 import * as api from '../api/api';
 import { AxiosResponse } from 'axios';
-import { ProductionArticleDataProps } from '../pages/Authentication/type';
+import { ProductionArticleDataProps, WorkForceDetailsDataProps } from '../pages/Authentication/type';
 import { PartialUpdateArticle } from '../components/Tables/ProductionTable';
 
 
@@ -90,4 +91,12 @@ export const getArticleProductionValueAction = async (id: number): Promise<{ dat
   return api.getArticleProductionValue(id);
 
 
+};
+/**********************Main d'oeuvre */
+export const addWorkForceDetailsAction = (workForceData: WorkForceDetailsDataProps): Promise<AxiosResponse<any>> => {
+  return api.addWorkForceDetails(workForceData);
+};
+
+export const getWorkForceDetailsAction = async (id: number): Promise<{ data: WorkForceDetailsDataProps[] }> => {
+  return api.getWorkForceDetails(id);
 };

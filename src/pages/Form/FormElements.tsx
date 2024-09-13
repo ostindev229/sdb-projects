@@ -15,7 +15,7 @@ import { useFormik, FormikHelpers } from "formik";
 import { AxiosError } from 'axios';
 import { UpdateArticleValues } from '../../components/Tables/ProductionTable';
 import { useToast } from '@chakra-ui/react';
-
+import WorkforceDetails from '../Authentication/WorkforceDetails';
 
 
 
@@ -174,11 +174,11 @@ const FormElements: React.FC = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Form Elements" />
+      <Breadcrumb pageName="Article pour la préparation" />
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-            <h3 className="font-medium text-black dark:text-white">Select input</h3>
+            <h3 className="font-medium text-black dark:text-white">Enregistrement d'articles pour production</h3>
           </div>
           <form onSubmit={formik.handleSubmit} className="flex flex-col gap-5.5 p-6.5">
             <div>
@@ -250,9 +250,13 @@ const FormElements: React.FC = () => {
             updateProductionArticleData={handleUpdate}
           />
         </div>
-        <div>
-          <p>Main d'ouvres directes</p>
+        <div className='mt-12'>
+          <p className="font-bold mb-6">
+            Informations relatives à la main d'œuvre
+          </p>
+          <WorkforceDetails />
         </div>
+
       </div>
     </>
   );

@@ -82,7 +82,7 @@ const ProductionTable: React.FC<ProductionTableProps> = ({
     }
   };
 
-  console.log(selectedArticle);
+
 
 
   return (

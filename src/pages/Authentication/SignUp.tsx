@@ -10,9 +10,9 @@ interface CardProps extends Omit<NewProductionDataProps, 'redirectTo'> {
 const Card: React.FC<CardProps> = ({ productionDate, productionQte, productionTitle, onClick }) => {
   return (
     <div className="relative w-full p-6 rounded border-[1px] border-slate-300 overflow-hidden group bg-white">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-[#2563EB] opacity-0 group-hover:opacity-80 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#7B3F00] to-[#7B3F00] opacity-0 group-hover:opacity-80 transition-opacity duration-300" />
       <div className="relative z-10 mb-4 flex items-center">
-        <FiCalendar className="mr-2 text-2xl text-[#2563EB] group-hover:text-white transition-colors duration-300" />
+        <FiCalendar className="mr-2 text-2xl text-[#7B3F00] group-hover:text-white transition-colors duration-300" />
         <div>
           <h3 className="font-medium text-lg text-slate-950 group-hover:text-white transition-colors duration-300">
             Date de production
@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({ productionDate, productionQte, productionTi
         </div>
       </div>
       <div className="relative z-10 flex items-center mb-4">
-        <FiBox className="mr-2 text-2xl text-[#2563EB] group-hover:text-white transition-colors duration-300" />
+        <FiBox className="mr-2 text-2xl text-[#7B3F00] group-hover:text-white transition-colors duration-300" />
         <div>
           <h3 className="font-medium text-lg text-slate-950 group-hover:text-white transition-colors duration-300">
             Quantité produite
@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({ productionDate, productionQte, productionTi
         </div>
       </div>
       <div className="relative z-10 flex items-center mb-4">
-        <FiStar className="mr-2 text-2xl text-[#2563EB] group-hover:text-white transition-colors duration-300" />
+        <FiStar className="mr-2 text-2xl text-[#7B3F00] group-hover:text-white transition-colors duration-300" />
         <div>
           <h3 className="font-medium text-lg text-slate-950 group-hover:text-white transition-colors duration-300">
             Nom de la Production
@@ -48,7 +48,7 @@ const Card: React.FC<CardProps> = ({ productionDate, productionQte, productionTi
       <div className="flex justify-center">
         <motion.button
           onClick={onClick}
-          className="px-4 py-2 bg-white text-[#2563EB] font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+          className="px-4 py-2 bg-white text-[#7B3F00] font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

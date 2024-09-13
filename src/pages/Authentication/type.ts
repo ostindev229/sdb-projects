@@ -30,3 +30,9 @@ export interface NewProductionDataProps {
     productionTitle: string;
     onClick: () => void;
 }
+
+export interface WorkForceDetailsDataProps {
+    production_id: number;
+    number: number;
+    pricePerP: number;
+}

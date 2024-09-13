@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from "axios";
-import { ArticleDataProps, NewProductionDataProps, ProductionArticleDataProps } from "../pages/Authentication/type";
+import { ArticleDataProps, NewProductionDataProps, ProductionArticleDataProps, WorkForceDetailsDataProps } from "../pages/Authentication/type";
 import { PartialUpdateArticle } from "../components/Tables/ProductionTable";
+
 const API = axios.create({
-  baseURL: "http://192.168.100.5:8000/",
+  baseURL: "https://sdbenin-1065a1430d04.herokuapp.com",
 });
 
 export const addArticle = (articleData: ArticleDataProps): Promise<AxiosResponse<any>> => {
@@ -58,4 +59,12 @@ export const createArticleProduction = (articleData: ProductionArticleDataProps)
 
 export const getArticleProductionValue = (id: number) => {
   return API.get(`/api/article/production/${id}`);
+}
+
+export const addWorkForceDetails = (workForceData: WorkForceDetailsDataProps): Promise<AxiosResponse<any>> => {
+  return API.post("/api/creer/maindoeuvre", workForceData);
+}
+
+export const getWorkForceDetails = (id: number) => {
+  return API.get(`/api/liste/maindoeuvre/${id}`);
 }
