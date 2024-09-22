@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { ArticleDataProps, NewProductionDataProps, ProductionArticleDataProps, WorkForceDetailsDataProps } from "../pages/Authentication/type";
+import { ArticleDataProps, NewProductionDataProps, WorkForceDetailsDataProps } from "../pages/Authentication/type";
 import { PartialUpdateArticle } from "../components/Tables/ProductionTable";
+import { AddArticleProductionValues } from "../pages/Form/FormElements";
 
 const API = axios.create({
-  baseURL: "https://sdbenin-1065a1430d04.herokuapp.com",
+  baseURL: "https://sdbenin-c784f63c9225.herokuapp.com",
 });
 
 export const addArticle = (articleData: ArticleDataProps): Promise<AxiosResponse<any>> => {
@@ -38,8 +39,9 @@ export const deleteArticleProductionList = (id: number) => {
 };
 
 export const updateArticleProductionList = (articleData: PartialUpdateArticle) => {
-  return API.put(`/api/update_article/production/${articleData.article_id}`, articleData, {
-  });
+console.log("Données envoyés", articleData);
+
+  return API.put(`/api/update_article/production/${articleData.id}`, articleData);
 };
 
 
@@ -53,7 +55,7 @@ export const getNewProductionValue = () => {
 };
 
 
-export const createArticleProduction = (articleData: ProductionArticleDataProps): Promise<AxiosResponse<any>> => {
+export const createArticleProduction = (articleData: AddArticleProductionValues): Promise<AxiosResponse<any>> => {
   return API.post("/api/create/article-production", articleData);
 }
 

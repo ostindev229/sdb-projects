@@ -1,3 +1,4 @@
+// FormElements.tsx
 import React, { useState, useEffect } from 'react';
 import {
   getArticleNameAction,
@@ -7,7 +8,6 @@ import {
   updateArticleProductionListAction
 } from '../../action/addArticle';
 import ProductionTable from '../../components/Tables/ProductionTable';
-import { ProductionArticleDataProps } from '../Authentication/type';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useParams } from 'react-router-dom';
 import * as Yup from "yup";
@@ -17,21 +17,20 @@ import { UpdateArticleValues } from '../../components/Tables/ProductionTable';
 import { useToast } from '@chakra-ui/react';
 import WorkforceDetails from '../Authentication/WorkforceDetails';
 
-
-
-
 const validationSchema = Yup.object().shape({
   article_id: Yup.number().min(1, "Veuillez sélectionner un article").required("L'article est requis"),
-  articleQte: Yup.number().min(1, "La quantité doit être supérieure à 0").required("La quantité est requise"),
+  articleProductionQte: Yup.number().min(1, "La quantité doit être supérieure à 0").required("La quantité est requise"),
   unitPrice: Yup.number().min(1, "Le prix unitaire doit être supérieur ou égal à 1").required("Le prix unitaire est requis"),
 });
 
 interface Article {
   id: number;
   articleName: string;
-
 }
 
+ export interface ArticleProductionResponse {
+  articleProductions: UpdateArticleValues[];
+}
 
 const FormElements: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -44,20 +43,44 @@ const FormElements: React.FC = () => {
   const fetchArticlesProduction = async () => {
     try {
       const response = await getArticleProductionValueAction(productionId);
+      console.log(response.data.articleProductions);
+      
+     
+      
       setArticlesState(response.data.articleProductions);
     } catch (error) {
       console.error('Error fetching articles:', error);
+      toast({
+        title: 'Erreur',
+        description: "Impossible de récupérer les articles de production.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     }
   };
 
   const fetchArticles = async () => {
     try {
       const response = await getArticleNameAction();
+      
       setArticles(response.data);
+      
     } catch (error) {
       console.error('Erreur lors de la récupération des articles:', error);
+      toast({
+        title: 'Erreur',
+        description: "Impossible de récupérer les articles.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     }
   };
+
+  
 
   useEffect(() => {
     fetchArticles();
@@ -70,33 +93,35 @@ const FormElements: React.FC = () => {
       articleName: "",
       production_id: productionId,
       article_id: 0,
-      articleQte: 1,
+      articleProductionQte: 1,
       unitPrice: 0,
     },
     validationSchema,
-    onSubmit: async (values, { resetForm }: FormikHelpers<ProductionArticleDataProps>) => {
+    onSubmit: async (values, { resetForm }: FormikHelpers<UpdateArticleValues>) => {
+      
       try {
         await addArticleProductionAction(values);
+
         toast({
-          title: 'Success',
-          description: "Un article ajouté avec succès",
+          title: 'Succès',
+          description: "Un article ajouté avec succès.",
           status: 'success',
           duration: 9000,
           isClosable: true,
           position: 'top-right',
-        })
+        });
         resetForm();
         fetchArticlesProduction();
       } catch (error) {
         console.error('Erreur:', error);
         toast({
-          title: 'Error',
-          description: "L'ajout de l'article a échoué",
+          title: 'Erreur',
+          description: "L'ajout de l'article a échoué.",
           status: 'error',
           duration: 9000,
           isClosable: true,
           position: 'top-right',
-        })
+        });
       }
     },
   });
@@ -106,71 +131,70 @@ const FormElements: React.FC = () => {
       await deleteArticleProductionListAction(id);
       setArticlesState(prevState => prevState.filter(article => article.id !== id));
       toast({
-        title: 'Success',
-        description: "Article supprimé avec succès",
+        title: 'Succès',
+        description: "Article supprimé avec succès.",
         status: 'success',
         duration: 9000,
         isClosable: true,
         position: 'top-right',
-      })
+      });
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'article:', error);
       if (error instanceof AxiosError && error.response?.status === 404) {
         toast({
-          title: 'Error',
-          description: "L'article n'a pas été trouvé",
+          title: 'Erreur',
+          description: "L'article n'a pas été trouvé.",
           status: 'error',
           duration: 9000,
           isClosable: true,
           position: 'top-right',
-        })
+        });
       } else {
         toast({
-          title: 'Error',
-          description: "Erreur lors de la suppression de l'article",
+          title: 'Erreur',
+          description: "Erreur lors de la suppression de l'article.",
           status: 'error',
           duration: 9000,
           isClosable: true,
           position: 'top-right',
-        })
+        });
       }
     }
   };
 
   const handleUpdate = async (articleData: UpdateArticleValues) => {
-
     const finalValue = {
-      article_id: articleData.id,
-      articleQte: articleData.articleProductionQte,
+      article_id: articleData.article_id,
       unitPrice: articleData.unitPrice,
+      articleQte: articleData.articleProductionQte,
+      id : articleData.id
     };
 
     try {
-      console.log(articleData);
-
       await updateArticleProductionListAction(finalValue);
-
       toast({
-        title: 'Success',
-        description: "L'article a été mis à jour avec succès",
+        title: 'Succès',
+        description: "L'article a été mis à jour avec succès.",
         status: 'success',
         duration: 9000,
         isClosable: true,
         position: 'top-right',
-      })
+      });
       fetchArticlesProduction(); // Re-fetch articles to update the state
     } catch (error) {
       console.error('Erreur lors de la mise à jour de l\'article:', error);
       toast({
-        title: 'Error',
-        description: "Erreur lors de la mise à jour de l'article",
+        title: 'Erreur',
+        description: "Erreur lors de la mise à jour de l'article.",
         status: 'error',
         duration: 9000,
         isClosable: true,
         position: 'top-right',
-      })
+      });
     }
   };
+
+
 
   return (
     <>
@@ -205,15 +229,15 @@ const FormElements: React.FC = () => {
                 <label className="mb-3 block text-black dark:text-white">Quantité</label>
                 <input
                   type="number"
-                  name="articleQte"
-                  value={formik.values.articleQte}
+                  name="articleProductionQte"
+                  value={formik.values.articleProductionQte}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] dark:border-form-strokedark dark:bg-form-input ${formik.touched.articleQte && formik.errors.articleQte ? 'border-red-500' : ''}`}
+                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] dark:border-form-strokedark dark:bg-form-input ${formik.touched.articleProductionQte && formik.errors.articleProductionQte ? 'border-red-500' : ''}`}
                   min="1"
                 />
-                {formik.touched.articleQte && formik.errors.articleQte && (
-                  <div className="text-red-500 text-sm mt-1">{formik.errors.articleQte}</div>
+                {formik.touched.articleProductionQte && formik.errors.articleProductionQte && (
+                  <div className="text-red-500 text-sm mt-1">{formik.errors.articleProductionQte}</div>
                 )}
               </div>
 
@@ -225,7 +249,7 @@ const FormElements: React.FC = () => {
                   value={formik.values.unitPrice}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] dark:border-form-strokedark dark:bg-form-input ${formik.touched.articleQte && formik.errors.articleQte ? 'border-red-500' : ''}`}
+                  className={`w-full rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-[#7B3F00] active:border-[#7B3F00] dark:border-form-strokedark dark:bg-form-input ${formik.touched.unitPrice && formik.errors.unitPrice ? 'border-red-500' : ''}`}
                   min="1"
                   step="0.01"
                 />
@@ -256,7 +280,6 @@ const FormElements: React.FC = () => {
           </p>
           <WorkforceDetails />
         </div>
-
       </div>
     </>
   );

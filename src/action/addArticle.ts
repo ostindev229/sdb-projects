@@ -3,8 +3,9 @@
 import { ArticleDataProps, NewProductionDataProps } from '../pages/Authentication/type.ts';
 import * as api from '../api/api';
 import { AxiosResponse } from 'axios';
-import { ProductionArticleDataProps, WorkForceDetailsDataProps } from '../pages/Authentication/type';
+import {  WorkForceDetailsDataProps } from '../pages/Authentication/type';
 import { PartialUpdateArticle } from '../components/Tables/ProductionTable';
+import { AddArticleProductionValues, ArticleProductionResponse } from '../pages/Form/FormElements.tsx';
 
 
 export const addArticleAction = (articleData: ArticleDataProps): Promise<AxiosResponse<any>> => {
@@ -54,9 +55,13 @@ export const updateArticleListAction = async (id: number, articleData: ArticleDa
 
 
 export const updateArticleProductionListAction = async (articleData: PartialUpdateArticle) => {
+  console.log(articleData);
+
   try {
     const response = await api.updateArticleProductionList(articleData);
     return response;
+    
+     
   } catch (error) {
     console.error('Error updating article:', error);
     throw error;
@@ -83,14 +88,12 @@ export const getNewProductionValueAction = async (): Promise<{ data: NewProducti
 
 /**********************Nouvelle article pour une production spécifique */
 
-export const addArticleProductionAction = (articleData: ProductionArticleDataProps): Promise<AxiosResponse<any>> => {
+export const addArticleProductionAction = (articleData: AddArticleProductionValues): Promise<AxiosResponse<any>> => {
   return api.createArticleProduction(articleData);
 };
 
-export const getArticleProductionValueAction = async (id: number): Promise<{ data: ProductionArticleDataProps[] }> => {
+export const getArticleProductionValueAction = async (id: number): Promise<{ data: ArticleProductionResponse }> => {
   return api.getArticleProductionValue(id);
-
-
 };
 /**********************Main d'oeuvre */
 export const addWorkForceDetailsAction = (workForceData: WorkForceDetailsDataProps): Promise<AxiosResponse<any>> => {
