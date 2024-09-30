@@ -3,9 +3,9 @@
 import { ArticleDataProps, NewProductionDataProps } from '../pages/Authentication/type.ts';
 import * as api from '../api/api';
 import { AxiosResponse } from 'axios';
-import {  WorkForceDetailsDataProps } from '../pages/Authentication/type';
+import {  WorkForceDetailsDataProps, ProductionArticleDataProps } from '../pages/Authentication/type';
 import { PartialUpdateArticle } from '../components/Tables/ProductionTable';
-import { AddArticleProductionValues, ArticleProductionResponse } from '../pages/Form/FormElements.tsx';
+import { ArticleProductionResponse } from '../pages/Form/FormElements.tsx';
 
 
 export const addArticleAction = (articleData: ArticleDataProps): Promise<AxiosResponse<any>> => {
@@ -88,7 +88,7 @@ export const getNewProductionValueAction = async (): Promise<{ data: NewProducti
 
 /**********************Nouvelle article pour une production spécifique */
 
-export const addArticleProductionAction = (articleData: AddArticleProductionValues): Promise<AxiosResponse<any>> => {
+export const addArticleProductionAction = (articleData: ProductionArticleDataProps): Promise<AxiosResponse<any>> => {
   return api.createArticleProduction(articleData);
 };
 
@@ -103,3 +103,23 @@ export const addWorkForceDetailsAction = (workForceData: WorkForceDetailsDataPro
 export const getWorkForceDetailsAction = async (id: number): Promise<{ data: WorkForceDetailsDataProps[] }> => {
   return api.getWorkForceDetails(id);
 };
+
+export const deleteWorkForceDetailsAction = async (id: number) => {
+  try {
+    const response = await api.deleteWorkForceDetails(id);
+    return response;
+  } catch (error) {
+    console.error('Error deleting work force:', error);
+    throw error;
+  }
+}
+
+export const updateWorkForceDetailsAction = async (id: number, workForceData: WorkForceDetailsDataProps) => {
+  try {
+    const response = await api.updateWorkForceDetails(id, workForceData);
+    return response;
+  } catch (error) {
+    console.error('Error updating work force:', error);
+    throw error;
+  }
+}

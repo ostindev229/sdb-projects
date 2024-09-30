@@ -12,9 +12,9 @@ import {
   FormLabel,
   FormControl,
   Input,
+  useDisclosure,
+  ChakraProvider,
 } from '@chakra-ui/react';
-import { useDisclosure } from '@chakra-ui/react';
-import { ChakraProvider } from '@chakra-ui/react';
 
 interface TableThreeProps {
   articles: ArticleDataProps[];
@@ -29,24 +29,42 @@ const TableThree: React.FC<TableThreeProps> = ({
 }) => {
   const [selectedArticle, setSelectedArticle] =
     useState<ArticleDataProps | null>(null);
+  const [articleToDelete, setArticleToDelete] = useState<number | null>(null);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isUpdateModalOpen,
+    onOpen: onUpdateModalOpen,
+    onClose: onUpdateModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isDeleteModalOpen,
+    onOpen: onDeleteModalOpen,
+    onClose: onDeleteModalClose,
+  } = useDisclosure();
 
   const handleDelete = (id: number) => {
-    if (window.confirm('Are you sure you want to delete this article?')) {
-      deleteArticleData(id);
+    setArticleToDelete(id);
+    onDeleteModalOpen();
+  };
+
+  const confirmDelete = () => {
+    if (articleToDelete !== null) {
+      deleteArticleData(articleToDelete);
+      setArticleToDelete(null);
+      onDeleteModalClose();
     }
   };
 
   const handleUpdate = (article: ArticleDataProps) => {
     setSelectedArticle(article);
-    onOpen();
+    onUpdateModalOpen();
   };
 
   const handleSave = () => {
     if (selectedArticle) {
       updateArticleData(selectedArticle.id, selectedArticle);
-      onClose();
+      onUpdateModalClose();
     }
   };
 
@@ -134,8 +152,10 @@ const TableThree: React.FC<TableThreeProps> = ({
           </tbody>
         </table>
       </div>
+
+      {/* Update Modal */}
       <ChakraProvider>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isUpdateModalOpen} onClose={onUpdateModalClose}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Mise à jour de l'article</ModalHeader>
@@ -164,7 +184,27 @@ const TableThree: React.FC<TableThreeProps> = ({
               <Button colorScheme="blue" mr={3} onClick={handleSave}>
                 Enregistrer
               </Button>
-              <Button variant="ghost" onClick={onClose}>
+              <Button variant="ghost" onClick={onUpdateModalClose}>
+                Annuler
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+
+        {/* Delete Confirmation Modal */}
+        <Modal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Confirmation de suppression</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              Êtes-vous sûr de vouloir supprimer cet article ?
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="red" mr={3} onClick={confirmDelete}>
+                Supprimer
+              </Button>
+              <Button variant="ghost" onClick={onDeleteModalClose}>
                 Annuler
               </Button>
             </ModalFooter>

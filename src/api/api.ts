@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { ArticleDataProps, NewProductionDataProps, WorkForceDetailsDataProps } from "../pages/Authentication/type";
+import { ArticleDataProps, NewProductionDataProps, WorkForceDetailsDataProps, ProductionArticleDataProps } from "../pages/Authentication/type";
 import { PartialUpdateArticle } from "../components/Tables/ProductionTable";
-import { AddArticleProductionValues } from "../pages/Form/FormElements";
+
 
 const API = axios.create({
   baseURL: "https://sdbenin-c784f63c9225.herokuapp.com",
@@ -55,7 +55,7 @@ export const getNewProductionValue = () => {
 };
 
 
-export const createArticleProduction = (articleData: AddArticleProductionValues): Promise<AxiosResponse<any>> => {
+export const createArticleProduction = (articleData: ProductionArticleDataProps): Promise<AxiosResponse<any>> => {
   return API.post("/api/create/article-production", articleData);
 }
 
@@ -70,3 +70,14 @@ export const addWorkForceDetails = (workForceData: WorkForceDetailsDataProps): P
 export const getWorkForceDetails = (id: number) => {
   return API.get(`/api/liste/maindoeuvre/${id}`);
 }
+
+export const deleteWorkForceDetails = (id: number) => {
+  return API.delete(`/api/supprimer/maindoeuvre/${id}`, {
+
+  });
+};
+
+export const updateWorkForceDetails = (id: number, workForceData: WorkForceDetailsDataProps) => {
+  return API.put(`/api/modifier/maindoeuvre/${id}`, workForceData, {
+  });
+};
