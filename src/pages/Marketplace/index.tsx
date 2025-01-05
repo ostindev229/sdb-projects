@@ -9,15 +9,14 @@ const Marketplace: React.FC = () => {
 
     return (
         <>
-             <div>
+            
       <Navbar />
       <Hero />
+      <ProductSection />
+
         <Testimonials />
-    </div>
-        <div>
-            <h1>Ecommerce</h1>
-            <ProductSection />
-        </div>
+   
+        
         </>
     );
 };
