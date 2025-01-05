@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     fontFamily: {
       satoshi: ['Satoshi', 'sans-serif'],
+
     },
     screens: {
       '2xsm': '375px',
@@ -216,6 +217,7 @@ module.exports = {
         6: '6px',
       },
       boxShadow: {
+        productCardShadow: '0px 4px 24px 0px rgba(123, 123, 123, 0.15)',
         default: '0px 8px 13px -3px rgba(0, 0, 0, 0.07)',
         card: '0px 1px 3px rgba(0, 0, 0, 0.12)',
         'card-2': '0px 1px 2px rgba(0, 0, 0, 0.05)',
