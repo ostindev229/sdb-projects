@@ -8,7 +8,7 @@ const products = [{ name: 'Spiced Mint', price: 9.99 }, { name: 'Sweet Straweber
 const ProductSection = () => {
 
     return (
-        <div className="px-[165px]">
+        <div className="px-[165px] pb-[125px] pt-[90px]">
             <h2 className={titleSectionStyle}>Produits</h2>
             <p className={subDescriptionStyle}>Commandez-le pour vous ou pour vos proches</p>
             <div className="mb-[50px]"></div>
