@@ -8,12 +8,14 @@ import SignIn from './pages/Authentication/SignIn';
 import Login from './pages/Authentication/Login';
 import EntreSortie from './pages/Dashboard/EntreSortie';
 
-import ECommerce from './pages/Dashboard/ECommerce';
+
 import FormElements from './pages/Form/FormElements';
 import Profile from './pages/Profile';
 import Home from './pages/Home';
 
 import DefaultLayout from './layout/DefaultLayout';
+
+import Marketplace from './pages/Marketplace';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,6 +35,12 @@ function App() {
     <Routes>
       <Route
         path="/"
+        element={
+          <Marketplace />
+        }
+      />
+      <Route
+        path="/home"
         element={
           <DefaultLayout>
             <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
@@ -91,13 +99,13 @@ function App() {
         }
       />
 
-<Route
+      <Route
         path="/entre-sortie"
         element={
           <>
             <DefaultLayout>
               <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-            <EntreSortie />
+              <EntreSortie />
 
             </DefaultLayout>
           </>
