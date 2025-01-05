@@ -6,10 +6,12 @@ import Production from './pages/Authentication/Production';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import Login from './pages/Authentication/Login';
+import EntreSortie from './pages/Dashboard/EntreSortie';
 
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
 import Profile from './pages/Profile';
+import Home from './pages/Home';
 
 import DefaultLayout from './layout/DefaultLayout';
 
@@ -34,7 +36,7 @@ function App() {
         element={
           <DefaultLayout>
             <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-            <ECommerce />
+            <Home />
           </DefaultLayout>
         }
       />
@@ -85,6 +87,19 @@ function App() {
           <>
             <PageTitle title="Login | TailAdmin - Tailwind CSS Admin Dashboard Template" />
             <Login />
+          </>
+        }
+      />
+
+<Route
+        path="/entre-sortie"
+        element={
+          <>
+            <DefaultLayout>
+              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <EntreSortie />
+
+            </DefaultLayout>
           </>
         }
       />
