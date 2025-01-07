@@ -17,7 +17,7 @@ const DetailProduct: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="pt-[47px] pb-[114px] px-[165px]">
       <div className="mt-[47px]"></div>
       <div className="lg:flex gap-[31px]">
         <div className="lg:w-[540px] lg:h-[433px] bg-[#F7F8FA]"></div>
