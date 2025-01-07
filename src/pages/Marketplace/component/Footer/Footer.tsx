@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center text-sm text-white/60">
           <p>©Candleaf All Rights Reserved.</p>
           <p className="flex items-center gap-1">
-            Designed with 
+            Coded with 
             <span className="text-red-500">❤</span>
             by Ostino & Imo
           </p>
