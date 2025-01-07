@@ -14,7 +14,7 @@ import Home from './pages/Home';
 
 import DefaultLayout from './layout/DefaultLayout';
 
-import Marketplace from './pages/Marketplace';
+import Marketplace, { MarketplacePageLayout } from './pages/Marketplace';
 import DetailProduct from './pages/Marketplace/Products/DetailProduct';
 
 function App() {
@@ -33,8 +33,11 @@ function App() {
     <Loader />
   ) : (
     <Routes>
-      <Route path="/" element={<Marketplace />} />
-      <Route path="/detail-product" element={<DetailProduct />} />
+      <Route path="/" element={<MarketplacePageLayout />}>
+        <Route path="/" element={<Marketplace />} />
+        <Route path="/detail-product" element={<DetailProduct />} />
+      </Route>
+
       <Route
         path="/home"
         element={
