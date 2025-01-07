@@ -51,6 +51,8 @@ export function Navbar() {
       </nav>
 
       <CartDrawer />
+
+
     </>
   );
 }

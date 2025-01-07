@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
           {/* Features */}
           <div className=" flex py-3 mb-3">
             <div className="flex items-center gap-2 px-4 justify-center ">
-              <div className="bg-green-500 rounded-full p-1">
+              <div className="bg-[#56B280] rounded-full p-1">
                 <svg
                   className="h-4 w-4 text-white"
                   fill="none"
@@ -54,7 +54,7 @@ const Hero: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2 justify-center">
-              <div className="bg-green-500 rounded-full p-1">
+              <div className="bg-[#56B280] rounded-full p-1">
                 <svg
                   className="h-4 w-4 text-white"
                   fill="none"
@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Call to Action Button */}
-          <button className="bg-green-500 text-white px-8 py-3 rounded-md hover:bg-green-600 transition-colors">
+          <button className="bg-[#56B280] text-white px-8 py-3 rounded-md hover:bg-green-600 transition-colors">
             Discover Our Collection
           </button>
         </div>

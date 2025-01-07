@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
           <p className="flex items-center gap-1">
             Designed with 
             <span className="text-red-500">❤</span>
-            by Ostino
+            by Ostino & Imo
           </p>
         </div>
       </div>
